@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>묵자의 소비 성찰소 - 墨子 節用 & 兼愛</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sage: {
+                            50: '#f4f7f4',
+                            100: '#e3ebe3',
+                            200: '#c7d7c7',
+                            600: '#527354',
+                            700: '#415c43',
+                            800: '#344936',
+                            900: '#2a3a2c'
+                        },
+                        hanji: '#FBF9F4',
+                        wood: '#8B5A2B',
+                        ink: '#2C2C2C'
+                    },
+                    fontFamily: {
+                        sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                        serif: ['MaruBuri', 'Nanum Myeongjo', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #F7F5F0;
+            color: #2C2C2C;
+            background-image: radial-gradient(#e2ded4 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+        .hanji-card {
+            background: #FBF9F4;
+            box-shadow: 0 4px 20px -2px rgba(82, 115, 84, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+            border: 1px solid #E6E1D5;
+        }
+        .stamp-btn {
+            background: linear-gradient(135deg, #527354 0%, #415c43 100%);
+        }
+        .stamp-btn:hover {
+            background: linear-gradient(135deg, #415c43 0%, #344936 100%);
+        }
+        .bamboo-border {
+            border-left: 4px solid #527354;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans antialiased selection:bg-sage-200">
+
+    <!-- Navigation Header -->
+    <header class="w-full bg-[#FBF9F4]/90 backdrop-blur-md border-b border-[#E6E1D5] sticky top-0 z-40">
+        <div class="max-w-4xl mx-auto px-4 py-3.5 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-full bg-sage-600 flex items-center justify-center text-white text-lg font-bold font-serif shadow-sm">
+                    墨
+                </div>
+                <div>
+                    <h1 class="font-serif font-bold text-lg text-sage-900 leading-tight">묵자의 소비 성찰소</h1>
+                    <p class="text-xs text-gray-500">절용(節用)과 겸애(兼愛)로 돌아보는 나의 마음</p>
+                </div>
+            </div>
+            
+            <!-- Philosophical Tooltip Controls -->
+            <div class="flex items-center gap-2">
+                <button onclick="toggleModal('info-modal')" class="px-3 py-1.5 text-xs font-medium text-sage-700 bg-sage-100 hover:bg-sage-200 rounded-lg transition-colors flex items-center gap-1.5">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>묵자 사상 알아보기</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-4xl w-full mx-auto px-4 py-6 md:py-8 space-y-6">
+
+        <!-- Banner Intro -->
+        <div class="hanji-card rounded-2xl p-5 md:p-6 border border-sage-200 text-center relative overflow-hidden">
+            <div class="absolute -right-6 -bottom-6 text-sage-100 text-8xl font-serif pointer-events-none select-none opacity-50">
+                節用
+            </div>
+            <h2 class="text-xl md:text-2xl font-serif font-bold text-sage-900 mb-2">
+                "이 소비는 정말 나와 세상을 이롭게 할까요?"
+            </h2>
+            <p class="text-sm md:text-base text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                정답을 정해드리지 않습니다. 묵자(墨子)의 지혜를 빌려 당신의 마음속 진짜 필요와 타인을 향한 따뜻한 시선을 함께 찾아봅니다.
+            </p>
+        </div>
+
+        <!-- Section 1: Input Form & Presets -->
+        <div class="hanji-card rounded-2xl p-5 md:p-7 space-y-5">
+            <div class="flex items-center justify-between border-b border-gray-200 pb-3">
+                <h3 class="font-serif font-bold text-lg text-sage-800 flex items-center gap-2">
+                    <i class="fa-solid fa-pen-nib text-sage-600"></i>
+                    구매 성찰 신청하기
+                </h3>
+                <span class="text-xs text-gray-400">* 솔직하게 적어주실수록 성찰 깊이가 깊어집니다.</span>
+            </div>
+
+            <!-- Quick Presets -->
+            <div>
+                <label class="block text-xs font-semibold text-gray-500 mb-2">빠른 고민 예시 선택하기</label>
+                <div class="flex flex-wrap gap-2">
+                    <button type="button" onclick="loadPreset('tablet')" class="text-xs bg-white hover:bg-sage-50 text-sage-800 border border-sage-200 px-3 py-1.5 rounded-full transition-all flex items-center gap-1.5 shadow-sm">
+                        <i class="fa-solid fa-tablet-screen-button text-sage-600"></i> 비싼 공부용 태블릿 PC
+                    </button>
+                    <button type="button" onclick="loadPreset('tumbler')" class="text-xs bg-white hover:bg-sage-50 text-sage-800 border border-sage-200 px-3 py-1.5 rounded-full transition-all flex items-center gap-1.5 shadow-sm">
+                        <i class="fa-solid fa-whiskey-glass text-sage-600"></i> 새로 나온 브랜드 텀블러/가방
+                    </button>
+                    <button type="button" onclick="loadPreset('delivery')" class="text-xs bg-white hover:bg-sage-50 text-sage-800 border border-sage-200 px-3 py-1.5 rounded-full transition-all flex items-center gap-1.5 shadow-sm">
+                        <i class="fa-solid fa-utensils text-sage-600"></i> 잦은 배달음식과 디저트
+                    </button>
+                    <button type="button" onclick="loadPreset('clothes')" class="text-xs bg-white hover:bg-sage-50 text-sage-800 border border-sage-200 px-3 py-1.5 rounded-full transition-all flex items-center gap-1.5 shadow-sm">
+                        <i class="fa-solid fa-shirt text-sage-600"></i> 유행하는 브랜드 옷/신발
+                    </button>
+                </div>
+            </div>
+
+            <!-- Form Inputs -->
+            <form id="reflectionForm" onsubmit="handleAnalyze(event)" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">사고 싶은 것 / 고민 대상</label>
+                        <input type="text" id="itemName" required placeholder="예: 최신형 노이즈캔슬링 헤드폰" 
+                            class="w-full text-sm px-3.5 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-sage-600 focus:border-sage-600 bg-white shadow-sm transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-700 mb-1">예상 가격 (선택)</label>
+                        <input type="text" id="itemPrice" placeholder="예: 350,000원 또는 한 달 20만 원" 
+                            class="w-full text-sm px-3.5 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-sage-600 focus:border-sage-600 bg-white shadow-sm transition">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 mb-1">구매하려는 이유 / 망설여지는 상황</label>
+                    <textarea id="itemReason" rows="3" required placeholder="예: 공부할 때 집중이 안 돼서 사고 싶어요. 하지만 가격이 부담스럽고, 이미 집에 일반 이어폰이 있어서 사야 할지 고민입니다." 
+                        class="w-full text-sm px-3.5 py-2.5 rounded-xl border border-gray-300 focus:ring-2 focus:ring-sage-600 focus:border-sage-600 bg-white shadow-sm transition resize-none"></textarea>
+                </div>
+
+                <div class="pt-2 flex justify-end">
+                    <button type="submit" id="submitBtn" class="stamp-btn w-full md:w-auto px-8 py-3 text-white text-sm font-medium rounded-xl shadow-md transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-yin-yang"></i>
+                        <span>묵자의 성찰 보기</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="hidden hanji-card rounded-2xl p-10 text-center space-y-4">
+            <div class="inline-block animate-spin text-sage-600 text-3xl">
+                <i class="fa-solid fa-compass"></i>
+            </div>
+            <p class="font-serif text-sage-900 font-medium">묵자의 절용(節用)과 겸애(兼愛) 거울로 마음을 비춰보는 중입니다...</p>
+        </div>
+
+        <!-- Section 2: Output Analysis Card -->
+        <div id="outputContainer" class="hidden space-y-6">
+
+            <!-- Result Card -->
+            <div class="hanji-card rounded-2xl p-6 md:p-8 space-y-6 border-2 border-sage-200 relative">
+                
+                <!-- Action Buttons Header -->
+                <div class="flex items-center justify-between border-b border-sage-200 pb-4">
+                    <div class="flex items-center gap-2">
+                        <span class="px-2.5 py-1 bg-sage-100 text-sage-800 text-xs font-bold rounded-md font-serif">성찰 기록장</span>
+                        <span id="displayDate" class="text-xs text-gray-400"></span>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="copyReflection()" class="text-xs text-gray-600 hover:text-sage-700 bg-white hover:bg-sage-50 border border-gray-200 px-3 py-1.5 rounded-lg transition flex items-center gap-1 shadow-sm">
+                            <i class="fa-regular fa-copy"></i> 복사하기
+                        </button>
+                        <button onclick="printCard()" class="text-xs text-gray-600 hover:text-sage-700 bg-white hover:bg-sage-50 border border-gray-200 px-3 py-1.5 rounded-lg transition flex items-center gap-1 shadow-sm">
+                            <i class="fa-solid fa-print"></i> 카드 인쇄/저장
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 1. 상황 이해 -->
+                <div class="space-y-2 bg-sage-50/60 p-4 rounded-xl border border-sage-100">
+                    <h4 class="font-serif font-bold text-sage-900 text-base flex items-center gap-2">
+                        <i class="fa-solid fa-leaf text-sage-600"></i> 【상황 이해】
+                    </h4>
+                    <p id="resSituation" class="text-sm text-gray-700 leading-relaxed pl-6"></p>
+                </div>
+
+                <!-- Grid for 절용 & 겸애 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <!-- 2. 절용 점검 -->
+                    <div class="space-y-3 bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                        <h4 class="font-serif font-bold text-sage-900 text-base flex items-center gap-2 border-b border-sage-100 pb-2">
+                            <i class="fa-solid fa-scale-balanced text-sage-600"></i> 【절용 점검】 (節用)
+                        </h4>
+                        <ul class="text-xs space-y-2 text-gray-700 leading-relaxed">
+                            <li class="flex items-start gap-1.5">
+                                <span class="font-semibold text-sage-700 shrink-0">· 실제 필요성:</span>
+                                <span id="resJulNeed"></span>
+                            </li>
+                            <li class="flex items-start gap-1.5">
+                                <span class="font-semibold text-sage-700 shrink-0">· 실용성/영향:</span>
+                                <span id="resJulEffect"></span>
+                            </li>
+                            <li class="flex items-start gap-1.5">
+                                <span class="font-semibold text-sage-700 shrink-0">· 과시·충동성:</span>
+                                <span id="resJulImpulse"></span>
+                            </li>
+                            <li class="flex items-start gap-1.5">
+                                <span class="font-semibold text-sage-700 shrink-0">· 생각해볼 대안:</span>
+                                <span id="resJulAlt"></span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 3. 겸애 점검 -->
+                    <div class="space-y-3 bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+                        <h4 class="font-serif font-bold text-sage-900 text-base flex items-center gap-2 border-b border-sage-100 pb-2">
+                            <i class="fa-solid fa-heart text-sage-600"></i> 【겸애 점검】 (兼愛)
+                        </h4>
+                        <ul class="text-xs space-y-2 text-gray-700 leading-relaxed">
+                            <li class="flex items-start gap-1.5">
+                                <span class="font-semibold text-sage-700 shrink-0">· 나에게 미치는 영향:</span>
+                                <span id="resGyeomSelf"></span>
+                            </li>
+                            <li class="flex items-start gap-1.5">
+                                <span class="font-semibold text-sage-700 shrink-0">· 가족·주변 영향:</span>
+                                <span id="resGyeomOthers"></span>
+                            </li>
+                            <li class="flex items-start gap-1.5">
+                                <span class="font-semibold text-sage-700 shrink-0">· 사회·환경 영향:</span>
+                                <span id="resGyeomSociety"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 4. 묵자의 질문 (Interactive Checkboxes & Input) -->
+                <div class="space-y-3 bamboo-border pl-4 py-1">
+                    <h4 class="font-serif font-bold text-sage-900 text-base flex items-center gap-2">
+                        <i class="fa-circle-question text-sage-600"></i> 【묵자의 질문】
+                    </h4>
+                    <p class="text-xs text-gray-500">스스로 답해보고 마음의 체크박스를 채워보세요.</p>
+                    <div id="resQuestions" class="space-y-3">
+                        <!-- Dynamic Checklists rendered via JS -->
+                    </div>
+                </div>
+
+                <!-- 5. 성찰 제안 -->
+                <div class="bg-sage-100/50 p-4 rounded-xl border border-sage-200 space-y-2">
+                    <h4 class="font-serif font-bold text-sage-900 text-base flex items-center gap-2">
+                        <i class="fa-solid fa-seedling text-sage-600"></i> 【성찰 제안】
+                    </h4>
+                    <div id="resActions" class="text-xs text-gray-700 space-y-1.5 leading-relaxed pl-1">
+                        <!-- Dynamic Actions -->
+                    </div>
+                </div>
+
+                <!-- Disclaimer Footer -->
+                <div class="text-center pt-2 border-t border-gray-200">
+                    <p class="text-[11px] text-gray-400">
+                        ※ 이 성찰은 구매 여부를 강요하지 않으며, 스스로의 가치를 발견하도록 돕기 위한 묵자의 조언입니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-[#E6E1D5] bg-[#FBF9F4] py-6 text-center text-xs text-gray-500 space-y-1">
+        <p class="font-serif text-sage-800">묵자의 소비 성찰소 · Mozi's Consumption Reflection Lab</p>
+        <p class="text-[11px] text-gray-400">“절용자 쾌활(節用者 快活), 절약하는 사람은 늘 마음이 편안하고 활기차다”</p>
+    </footer>
+
+    <!-- Info Modal (Mozi Philosophy) -->
+    <div id="info-modal" class="hidden fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="hanji-card max-w-md w-full rounded-2xl p-6 space-y-4 relative">
+            <button onclick="toggleModal('info-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="flex items-center gap-2 border-b pb-3 border-sage-200">
+                <div class="w-7 h-7 rounded-full bg-sage-600 text-white font-serif font-bold flex items-center justify-center text-xs">묵</div>
+                <h3 class="font-serif font-bold text-lg text-sage-900">묵자의 핵심 사상 안내</h3>
+            </div>
+            
+            <div class="space-y-3 text-xs text-gray-700 leading-relaxed">
+                <div class="p-3 bg-sage-50 rounded-xl border border-sage-200">
+                    <h4 class="font-bold text-sage-800 mb-1 flex items-center gap-1.5">
+                        <i class="fa-solid fa-scale-balanced text-sage-600"></i> 절용 (節用) : 쓸데없는 낭비를 줄임
+                    </h4>
+                    <p>묵자는 무조건 아끼라고 하지 않았습니다. 사람의 건강, 안위, 삶의 질, 실질적 생산성에 도움 되는 소비는 인정하되, 남에게 보여주기 위한 과시나 지나친 낭비를 멀리하라고 했습니다.</p>
+                </div>
+
+                <div class="p-3 bg-sage-50 rounded-xl border border-sage-200">
+                    <h4 class="font-bold text-sage-800 mb-1 flex items-center gap-1.5">
+                        <i class="fa-solid fa-heart text-sage-600"></i> 겸애 (兼愛) : 치우침 없는 따뜻한 사랑
+                    </h4>
+                    <p>나 자신뿐만 아니라 가족, 주변 이웃, 사회 전체에 이로움(交相利)이 돌아가는지 생각하는 마음입니다. 나의 소비가 타인에게 어떤 기쁨이나 부담을 줄지 헤아려 봅니다.</p>
+                </div>
+            </div>
+
+            <div class="pt-2">
+                <button onclick="toggleModal('info-modal')" class="w-full py-2.5 bg-sage-600 text-white font-medium rounded-xl text-xs hover:bg-sage-700 transition">
+                    성찰소로 돌아가기
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Preset Data
+        const PRESETS = {
+            tablet: {
+                name: "공부용 고급 태블릿 PC",
+                price: "850,000원",
+                reason: "공부할 때 필기하고 인강 들으려고 사고 싶어요. 하지만 지금 노트와 종이책으로도勉強할 수는 있어서 가격이 많이 부담됩니다."
+            },
+            tumbler: {
+                name: "한정판 브랜드 텀블러/가방",
+                price: "65,000원",
+                reason: "친구들이 다들 들고 다녀서 예뻐 보여요. 집에도 텀블러가 몇 개 있지만 새로 디자인이 나와서 사고 싶습니다."
+            },
+            delivery: {
+                name: "매일 시켜 먹는 배달음식과 디저트",
+                price: "월 300,000원 이상",
+                reason: "퇴근이나 학교 끝나고 피곤해서 자꾸 배달 앱을 켜게 돼요. 돈도 많이 들고 쓰레기도 많이 나와 고민입니다."
+            },
+            clothes: {
+                name: "유행하는 브랜드 계절 옷/신발",
+                price: "180,000원",
+                reason: "SNS에서 요즘 인기라고 해서 사고 싶어요. 옷장에 옷이 없는 건 아닌데 입을 옷이 없는 기분이 듭니다."
+            }
+        };
+
+        function loadPreset(key) {
+            const preset = PRESETS[key];
+            if (preset) {
+                document.getElementById('itemName').value = preset.name;
+                document.getElementById('itemPrice').value = preset.price;
+                document.getElementById('itemReason').value = preset.reason;
+            }
+        }
+
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.classList.toggle('hidden');
+        }
+
+        // Analysis Logic grounded on Mozi's principles
+        function handleAnalyze(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('itemName').value.trim();
+            const price = document.getElementById('itemPrice').value.trim();
+            const reason = document.getElementById('itemReason').value.trim();
+
+            if (!name || !reason) return;
+
+            // Show loading
+            document.getElementById('loadingState').classList.remove('hidden');
+            document.getElementById('outputContainer').classList.add('hidden');
+
+            setTimeout(() => {
+                generateMoziResponse(name, price, reason);
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('outputContainer').classList.remove('hidden');
+                document.getElementById('outputContainer').scrollIntoView({ behavior: 'smooth' });
+            }, 800);
+        }
+
+        function generateMoziResponse(name, price, reason) {
+            const priceText = price ? `(${price})` : '';
+
+            // Set current date
+            const today = new Date();
+            document.getElementById('displayDate').innerText = `${today.getFullYear()}.${today.getMonth() + 1}.${today.getDate()}`;
+
+            // 1. 상황 이해
+            document.getElementById('resSituation').innerText = 
+                `'${name}'${priceText} 구매를 고려하며, 진짜 나에게 필요한 것인지와 경제적 부담 사이에서 깊이 고민하고 계시군요. 스스로 마음을 돌이켜보는 모습이 매우 귀합니다.`;
+
+            // 2. 절용 점검
+            document.getElementById('resJulNeed').innerText = 
+                `학업/건강/생계 등 실질적 삶의 질을 높이는 목적이 포함되어 있는지 점검합니다.`;
+            document.getElementById('resJulEffect').innerText = 
+                `구매 후 6개월 이상 지나도 매일 유용하게 쓰일 가치가 있는지 생각해봅니다.`;
+            document.getElementById('resJulImpulse').innerText = 
+                `남들과의 비교, 유행, 혹은 일시적인 스트레스 해소 마음이 섞여 있는지 살핍니다.`;
+            document.getElementById('resJulAlt').innerText = 
+                `이미 소지한 물건 활용, 대여, 중고 거래 또는 일주일 유예 기간 두기를 고려할 수 있습니다.`;
+
+            // 3. 겸애 점검
+            document.getElementById('resGyeomSelf').innerText = 
+                `이 구매가 내 지갑을 지나치게 얇아지게 만들어 미래의 마음 평온을 해치지 않는지 살핍니다.`;
+            document.getElementById('resGyeomOthers').innerText = 
+                `가족이나 함께 생활하는 사람들에게 경제적·상대적 부담이나 아쉬움을 주지 않는지 헤아립니다.`;
+            document.getElementById('resGyeomSociety').innerText = 
+                `불필요한 자원 낭비나 포장 쓰레기를 줄이고, 나보다 더 필요한 곳에 나눌 여유를 남기는지 봅니다.`;
+
+            // 4. 묵자의 질문 (Interactive rendering)
+            const questions = [
+                `이 물건('${name}')이 없으면 내 생활이나 목표에 실제로 어떤 큰 불편이 생기나요?`,
+                `구매 후 한 달 뒤에도 처음과 같은 기쁨과 유용함을 유지할 수 있을까요?`,
+                `이 돈을 나 자신이나 가까운 이의 진짜 행복을 위해 사용할 더 가치 있는 대안은 없을까요?`
+            ];
+
+            const qContainer = document.getElementById('resQuestions');
+            qContainer.innerHTML = '';
+            questions.forEach((q, idx) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'bg-white p-3 rounded-lg border border-gray-200 text-xs text-gray-700 space-y-2';
+                qDiv.innerHTML = `
+                    <label class="flex items-start gap-2 cursor-pointer font-medium text-sage-900">
+                        <input type="checkbox" class="mt-0.5 rounded border-gray-300 text-sage-600 focus:ring-sage-500">
+                        <span>질문 ${idx + 1}. ${q}</span>
+                    </label>
+                    <input type="text" placeholder="나만의 답을 적어보세요..." 
+                        class="w-full px-2.5 py-1.5 text-xs bg-sage-50/50 rounded border border-gray-200 focus:outline-none focus:ring-1 focus:ring-sage-600">
+                `;
+                qContainer.appendChild(qDiv);
+            });
+
+            // 5. 성찰 제안
+            const actions = [
+                `1. '7일 장바구니 유예법' : 오늘 바로 결제하지 않고, 일주일 동안 장바구니에 두고 마음의 변화 살피기.`,
+                `2. '대체재 리스트 적어보기' : 내가 이미 가진 유사한 물건 2가지를 찾아서 먼지를 털고 사용해보기.`,
+                `3. '가치 가계부 쓰기' : 이 물건 대신 마음의 평화를 사기 위해 저축하거나 주변 소중한 이에게 따뜻한 음료 대접하기.`
+            ];
+
+            const aContainer = document.getElementById('resActions');
+            aContainer.innerHTML = '';
+            actions.forEach(act => {
+                const p = document.createElement('p');
+                p.className = 'leading-relaxed font-medium';
+                p.innerText = act;
+                aContainer.appendChild(p);
+            });
+        }
+
+        // Copy reflection summary text
+        function copyReflection() {
+            const sit = document.getElementById('resSituation').innerText;
+            const text = `[묵자의 소비 성찰소 기록]\n\n【상황 이해】\n${sit}\n\n* 절용(節用)과 겸애(兼愛)를 바탕으로 내 마음을 스스로 점검했습니다.`;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('성찰 기록이 클립보드에 복사되었습니다.');
+            }).catch(() => {
+                alert('복사에 실패했습니다.');
+            });
+        }
+
+        // Print Card View
+        function printCard() {
+            window.print();
+        }
+    </script>
+</body>
+</html>
